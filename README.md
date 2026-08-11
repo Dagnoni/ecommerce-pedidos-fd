@@ -7,8 +7,8 @@
 
 | Nome | Papel na Aula 01 |
 |---|---|
-| _Daniel Dagnoni | _oi
-| _Felipe Fernandes Macari | _oi
+| Daniel Dagnoni | test
+| Felipe Fernandes Macari | test
 
 ## Descrição do desafio
 
