@@ -5,10 +5,11 @@
 
 ## Equipe / Squad
 
-| Nome | Papel na Aula 01 |
+| Nome | Função |
 |---|---|
-| Daniel Dagnoni | test
-| Felipe Fernandes Macari | test
+|Daniel Dagnoni | Proce. pagamentos |
+|Felipe Fernandes Macari | Ger. Produtos/Cliente/Pedidos |
+|João Guilherme Araujo nunes| Func. Cadastro|
 
 ## Descrição do desafio
 
@@ -36,18 +37,27 @@ Nossa equipe recebeu um trabalho para fazer um sistema de gestão de pedidos par
 
 ```
 ecommerce-pedidos-fd/
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── com/senai/ecommerce/
-│   │           ├── modelo/
-│   │           ├── servico/
-│   │           ├── repositorio/
-│   │           └── util/
-│   └── test/
-│       └── java/
-│           └── com/senai/ecommerce/
-├── pom.xml
+├── back
+│    ├── src/
+│    │    ├── main/
+│    │    │   └── java/
+│    │    │       └── ecommerce-pedidos-fd
+│    │    │           └── git/   
+│    │    │               └──App.jv
+│    │    │       
+│    │    │       
+│    │    └── test/
+│    │        └── java
+│    │            └── ecommerce-pedidos-fd
+│    │                └── git/
+│    │                    └──AppTest.jv
+│    ├── .mvm/
+│    │    └── jvm.config
+│    │    └── maven.config
+│    └── pom.xml
+│
+├── front
+│   └──README.md
 ├── README.md
 └── .gitignore
 ```
