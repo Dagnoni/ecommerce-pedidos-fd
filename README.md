@@ -8,8 +8,8 @@
 | Nome | Função |
 |---|---|
 |Daniel Dagnoni | Proce. pagamentos |
-|Felipe Fernandes Macari | Ger. Produtos/Cliente/Pedidos |
-|João Guilherme Araujo nunes| Func. Cadastro|
+|Felipe Fernandes Macari | Ger. /Cliente/Pedidos |
+|João Guilherme Araujo nunes| Func. Cadastro/Produtos|
 
 ## Descrição do desafio
 
@@ -47,10 +47,15 @@ ecommerce-pedidos-fd/
 │    │    │       
 │    │    │       
 │    │    └── test/
-│    │        └── java
-│    │            └── ecommerce-pedidos-fd
-│    │                └── git/
-│    │                    └──AppTest.jv
+│    │        └── java/
+│    │            ├──ecommerce-pedidos-fd
+│    │            │   └── git/
+│    │            │        └──AppTest.jv
+│    │            │
+│    │            │
+│    │            │
+│                 └──procesamento-pagamento/
+│
 │    ├── .mvm/
 │    │    └── jvm.config
 │    │    └── maven.config
