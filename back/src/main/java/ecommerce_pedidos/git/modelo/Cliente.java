@@ -1,4 +1,4 @@
-package ecommerce-pedidos-fd.git.modelo;
+package ecommerce_pedidos.git.modelo;
 
 public class Cliente {
 
@@ -15,7 +15,7 @@ public class Cliente {
     private String paisNacao;
 
     
-}
+
 
 public Cliente( String nome, String cpf, String email, String telefone, String rua, String bairro, Integer numeroCasa, String cidade, String estado, String paisNacao){
     
@@ -29,4 +29,5 @@ public Cliente( String nome, String cpf, String email, String telefone, String r
     this.cidade = cidade;
     this.estado = estado;
     this.paisNacao = paisNacao;
+    }
 }
