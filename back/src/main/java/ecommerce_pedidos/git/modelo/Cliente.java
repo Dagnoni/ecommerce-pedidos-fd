@@ -2,6 +2,7 @@ package ecommerce_pedidos.git.modelo;
 
 public class Cliente {
 
+// Atributos privados
 
     private String nome;
     private String cpf;
@@ -16,7 +17,7 @@ public class Cliente {
 
     
 
-
+// Construtor
     public Cliente( String nome, String cpf, String email, String telefone, String rua, String bairro, Integer numeroCasa, String cidade, String estado, String paisNacao){
     
         this.nome = nome;
