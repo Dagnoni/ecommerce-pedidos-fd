@@ -1,6 +1,4 @@
-package com.ecommerce.modelo;
+package ecommerce_pedidos.git.modelo;
 
 public class cadastroCliente{
-//modulo cadastro/cliente
-
 }

@@ -1,11 +1,8 @@
 package ecommerce_pedidos.git.modelo;
 
-public class Cliente {
 
-// Atributos privados
+public class Cliente extends Pessoa {
 
-    private String nome;
-    private String cpf;
     private String email;
     private String telefone;
     private String rua;
@@ -15,14 +12,10 @@ public class Cliente {
     private String estado;
     private String paisNacao;
 
-    
-
-// Construtor
-    public Cliente( String nome, String cpf, String email, String telefone, String rua, String bairro, Integer numeroCasa, String cidade, String estado, String paisNacao){
-    
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
+    public Cliente(String nome, String cpf, String email, String telefone, String rua,
+                    String bairro, Integer numeroCasa, String cidade, String estado, String paisNacao) {
+        super(nome, cpf); 
+        setEmail(email);
         this.telefone = telefone;
         this.rua = rua;
         this.bairro = bairro;
@@ -32,31 +25,31 @@ public class Cliente {
         this.paisNacao = paisNacao;
     }
 
-    // Getters e Setters
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    @Override
+    public String getIdentificacao() {
+        return getNome() + " (CPF " + getDocumento() + ")";
     }
 
     public String getCpf() {
-        return cpf;
+        return getDocumento();
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        setDocumento(cpf);
     }
+
 
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email == null || email.isBlank() || !email.contains("@")) {
+            throw new IllegalArgumentException("E-mail inválido: " + email);
+        }
+        this.email = email.trim();
     }
+
 
     public String getTelefone() {
         return telefone;
@@ -112,5 +105,10 @@ public class Cliente {
 
     public void setPaisNacao(String paisNacao) {
         this.paisNacao = paisNacao;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s", getIdentificacao(), email);
     }
 }
