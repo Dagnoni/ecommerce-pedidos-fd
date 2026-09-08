@@ -1,4 +1,4 @@
-package ecommerce_pedidos.git.modelo;
+package com.ecommerce_pedidos.modelo;
 
 public abstract class Pessoa {
 
