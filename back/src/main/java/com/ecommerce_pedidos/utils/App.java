@@ -1,6 +1,9 @@
-package com.ecommerce_pedidos;
+package com.ecommerce_pedidos.utils;
 
 import java.math.BigDecimal;
+
+import com.ecommerce_pedidos.modelo.Cliente;
+import com.ecommerce_pedidos.modelo.Produto;
 
 public class App {
     public static void main(String[] args) {
