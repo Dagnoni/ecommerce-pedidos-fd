@@ -25,7 +25,7 @@ public class PedidosUtils {
         return String.format("PED-2026-%05d", sequencial);
     }
 
-    private static double calcularSubtotal(double[] precos, int[] quantidades) {
+   public static double calcularSubtotal(double[] precos, int[] quantidades) {
 
         double somaPrecos = 0;
 
