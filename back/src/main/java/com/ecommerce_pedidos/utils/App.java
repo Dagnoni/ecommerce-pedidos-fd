@@ -1,13 +1,15 @@
-package com.ecommerce_pedidos;
-import com.ecommerce_pedidos.modelo.Produto; // Import da classe Produto
-import com.ecommerce_pedidos.modelo.Cliente; // Import da classe Produto
-import com.ecommerce_pedidos.modelo.FormaPagamento;
-import com.ecommerce_pedidos.utils.Boleto;
-import com.ecommerce_pedidos.utils.CartaoCredito;
-import com.ecommerce_pedidos.utils.Pix; // Import da sub classe Forma de Pagamento
+package com.ecommerce_pedidos.utils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.ecommerce_pedidos.modelo.Cliente;
+import com.ecommerce_pedidos.modelo.FormaPagamento;
+import com.ecommerce_pedidos.modelo.Produto;
+// Se Pix, CartaoCredito e Boleto estiverem em outro pacote (ex: com.ecommerce_pedidos.pagamento), importe-os aqui:
+// import com.ecommerce_pedidos.pagamento.Pix;
+// import com.ecommerce_pedidos.pagamento.CartaoCredito;
+// import com.ecommerce_pedidos.pagamento.Boleto;
 
 public class App {
     public static void main(String[] args) {
@@ -53,8 +55,7 @@ public class App {
             System.out.println("OK: recusou e-mail inválido -> " + e.getMessage());
         }
 
-
-        //FORMAS DE PAGAMENTO 
+        // FORMAS DE PAGAMENTO 
         FormaPagamento pagamentoPix = new Pix(new BigDecimal("150.00"), "ana@exemplo.com");
         FormaPagamento pagamentoCartao = new CartaoCredito(new BigDecimal("899.90"), "4111111111111111", 3);
         FormaPagamento pagamentoBoleto = new Boleto(new BigDecimal("300.00"), "34191790010104351004791020150008196610000015000", LocalDate.now().plusDays(5));
