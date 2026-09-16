@@ -106,3 +106,6 @@ public class Produto {
             this.codigo, this.nome, this.preco.toPlainString(), this.quantidadeEmEstoque);
     }
 }
+
+
+// mudar Double para BigDecimal ****
