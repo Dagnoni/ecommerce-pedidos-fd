@@ -54,3 +54,8 @@ public class CartaoCredito extends FormaPagamento {
         return super.getResumo() + " (cartão final " + ultimosDigitos() + ", " + parcelas + "x)";
     }
 }
+
+
+
+
+// falta colocar bandeira

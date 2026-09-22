@@ -1,20 +1,20 @@
 package com.ecommerce_pedidos.modelo;
 
 public class itemPedido {
-    // 1. Atributos privados
-    private String produto;
+    //Atributos privados
+    private Produto produto; //Relacionamento direto de itemPedido com Produto
     private int quantidade;
     private double precoPraticado;
 
-    // 2. Construtor (utiliza os setters para reaproveitar as validações)
-    public itemPedido(String produto, int quantidade, double precoPraticado) {
+    // Construtor (utiliza os setters para reaproveitar as validações)
+    public itemPedido(Produto produto, int quantidade, double precoPraticado) {
         setProduto(produto);
         setQuantidade(quantidade);
         setPrecoPraticado(precoPraticado);
     }
 
-    // 3. Getters (Lógica de leitura)
-    public String getProduto() {
+   
+    public Produto getProduto() {
         return this.produto;
     }
 
@@ -26,10 +26,10 @@ public class itemPedido {
         return this.precoPraticado;
     }
 
-    // 4. Setters (Lógica de escrita com validações de regras de negócio)
-    public void setProduto(String produto) {
-        if (produto == null || produto.trim().isEmpty()) {
-            throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
+    //Setters
+    public void setProduto(Produto produto) {
+        if (produto == null) {
+            throw new IllegalArgumentException("O Produto não pode ser nulo.");
         }
         this.produto = produto;
     }
@@ -48,16 +48,22 @@ public class itemPedido {
         this.precoPraticado = precoPraticado;
     }
 
-    // 5. Método de negócio (pergunta que o objeto responde sobre si mesmo)
+    // Método de negócio (pergunta que o objeto responde sobre si mesmo)
     public double calcularSubtotal() {
         return this.quantidade * this.precoPraticado;
     }
 
-    // 6. toString sobrescrito
+    //toString sobrescrito
     @Override
     public String toString() {
         return String.format("ItemPedido [Produto: %s, Quantidade: %d, Preço Praticado: R$ %.2f, Subtotal: R$ %.2f]",
-                produto, quantidade, precoPraticado, calcularSubtotal());
-    }
+                produto.getNome(), quantidade, precoPraticado, calcularSubtotal());
+                //to string agora busca o nome dentro do
+            }
 
 }
+
+
+
+
+//Preciso mudar Double para BigDecimal****
