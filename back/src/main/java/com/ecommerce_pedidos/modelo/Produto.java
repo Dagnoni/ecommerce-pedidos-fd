@@ -105,4 +105,11 @@ public class Produto {
         return String.format("[%s] %s - R$ %s (%d em estoque)",
             this.codigo, this.nome, this.preco.toPlainString(), this.quantidadeEmEstoque);
     }
+<<<<<<< HEAD
 }
+=======
+}
+
+
+// mudar Double para BigDecimal ****
+>>>>>>> 070516358b824f0c1b9f8885c70100380fe771ed

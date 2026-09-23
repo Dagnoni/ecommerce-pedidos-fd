@@ -55,6 +55,7 @@ public class CartaoCredito extends FormaPagamento implements ProcessadorPagament
     public boolean processar(BigDecimal valor) {
         return processar();
     }
+<<<<<<< HEAD
 
     @Override
     public String getComprovante() {
@@ -72,3 +73,11 @@ public class CartaoCredito extends FormaPagamento implements ProcessadorPagament
         return true;
     }
 }
+=======
+}
+
+
+
+
+// falta colocar bandeira
+>>>>>>> 070516358b824f0c1b9f8885c70100380fe771ed
