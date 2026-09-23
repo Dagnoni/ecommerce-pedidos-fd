@@ -6,10 +6,6 @@ import java.time.LocalDate;
 import com.ecommerce_pedidos.modelo.Cliente;
 import com.ecommerce_pedidos.modelo.FormaPagamento;
 import com.ecommerce_pedidos.modelo.Produto;
-// Se Pix, CartaoCredito e Boleto estiverem em outro pacote (ex: com.ecommerce_pedidos.pagamento), importe-os aqui:
-// import com.ecommerce_pedidos.pagamento.Pix;
-// import com.ecommerce_pedidos.pagamento.CartaoCredito;
-// import com.ecommerce_pedidos.pagamento.Boleto;
 
 public class App {
     public static void main(String[] args) {

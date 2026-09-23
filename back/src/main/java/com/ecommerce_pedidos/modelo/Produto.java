@@ -12,7 +12,7 @@ public class Produto {
     private Boolean ativo;
 
     public Produto(String codigo, String nome, BigDecimal preco, Integer quantidadeEmEstoque) {
-    //  setCodigo(codigo);
+        setCodigo(codigo);
         setNome(nome);
         setPreco(preco);
         setQuantidadeEmEstoque(quantidadeEmEstoque);
@@ -22,12 +22,12 @@ public class Produto {
         return codigo;
     }
 
-   //* private void setCodigo(String codigo) {
-   //     if (codigo == null || codigo.isBlank()) {
-   //         throw new IllegalArgumentException("Código é obrigatório");
-   //    }
-   //     this.codigo = codigo.trim();
-   // }
+    private void setCodigo(String codigo) {
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("Código é obrigatório");
+        }
+        this.codigo = codigo.trim();
+    }
 
     public String getNome() {
         return nome;
