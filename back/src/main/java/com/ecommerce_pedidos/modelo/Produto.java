@@ -93,11 +93,10 @@ public class Produto {
         if (quantidade <= 0) {
             throw new IllegalArgumentException("Quantidade deve ser positiva");
         }
-        if (quantidade > quantidadeEmEstoque) {
-            throw new IllegalArgumentException(
-                "Estoque insuficiente. Disponível: " + quantidadeEmEstoque);
+        if (quantidade > this.quantidadeEmEstoque) {
+            throw new EstoqueInsuficienteException(this, quantidade);
         }
-        this.quantidadeEmEstoque = this.quantidadeEmEstoque - quantidade;
+        this.quantidadeEmEstoque -= quantidade;
     }
 
     @Override
@@ -107,5 +106,24 @@ public class Produto {
     }
 }
 
+import com.senai.ecommerce.modelo.Produto;
+public class EstoqueInsuficienteException extends ECommerceException {
+    private final Produto produto;
+    private final int quantidadeSolicitada;
+    
+    public EstoqueInsuficienteException(Produto produto, int quantidade) {
+        super("Estoque insuficiente de " + produto.getNome()
+            + ": disponível " + produto.getQuantidadeEmEstoque()
+            + ", solicitado " + quantidade);
+        this.produto = produto;
+        this.quantidadeSolicitada = quantidade;
+    }
+    public Produto getProduto() {
+        return produto;
+    }
+    public int getQuantidadeSolicitada() {
+        return quantidadeSolicitada;
+    }
+}
 
 // mudar Double para BigDecimal ****
