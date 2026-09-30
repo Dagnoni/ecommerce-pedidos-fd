@@ -15,6 +15,11 @@ public class Cliente extends Pessoa {
     public Cliente(String nome, String cpf, String email, String telefone, String rua,
                     String bairro, Integer numeroCasa, String cidade, String estado, String paisNacao) {
         super(nome, cpf); 
+        if (getDocumento().length() != 11) {
+        throw new IllegalArgumentException("Cliente deve ter CPF com 11 dígitos: " + cpf);
+        }
+
+}
         setEmail(email);
         this.telefone = telefone;
         this.rua = rua;
@@ -36,12 +41,16 @@ public class Cliente extends Pessoa {
 
     public void setCpf(String cpf) {
         setDocumento(cpf);
+        if (getDocumento().length() != 11) {
+            throw new IllegalArgumentException("Cliente deve ter CPF com 11 dígitos: " + cpf);
+        }
     }
 
 
     public String getEmail() {
         return email;
     }
+    private static final String REGEX_EMAIL = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
 
     public void setEmail(String email) {
         if (email == null || email.isBlank() || !email.contains("@")) {
