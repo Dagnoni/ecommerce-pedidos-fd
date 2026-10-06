@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ecommerce_pedidos.utils.PedidosUtils;
+import com.ecommerce_pedidos.excecao.EstoqueInsuficienteException;
+import com.ecommerce_pedidos.excecao.PedidoInvalidoException;
+
 
 public class Pedidos {
 
@@ -64,6 +67,18 @@ public class Pedidos {
         }
         itens.add(item);
     }
+
+ 
+
+public void adicionarItem(Produto produto, int quantidade) throws PedidoInvalidoException {
+    try {
+        itemPedido item = new itemPedido(produto, quantidade, produto.getPreco().doubleValue());
+        produto.baixarEstoque(quantidade);
+        itens.add(item);
+    } catch (EstoqueInsuficienteException | IllegalArgumentException e) {
+        throw new PedidoInvalidoException("Não foi possível adicionar o item: " + e.getMessage(), e);
+    }
+}
 
     //metodo de negocio: soma o subtotal de cada item do pedido
     public double calcularValorTotal() {

@@ -19,7 +19,7 @@ public class Cliente extends Pessoa {
         throw new IllegalArgumentException("Cliente deve ter CPF com 11 dígitos: " + cpf);
         }
 
-}
+
         setEmail(email);
         this.telefone = telefone;
         this.rua = rua;

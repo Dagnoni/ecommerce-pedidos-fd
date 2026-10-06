@@ -1,11 +1,26 @@
-package com.senai.ecommerce.excecao;
+package com.ecommerce_pedidos.excecao;
+
 public class ECommerceException extends Exception {
-public ECommerceException(String mensagem) {
-    super(mensagem);
+
+    private final String motivo;
+
+    public ECommerceException(String mensagem) {
+        this(mensagem, mensagem, null);
     }
-public ECommerceException(String mensagem, Throwable causa) {
-    super(mensagem, causa);
+
+    // se houver causa, o motivo é a mensagem da causa
+    public ECommerceException(String mensagem, Throwable causa) {
+        this(mensagem,
+             (causa != null && causa.getMessage() != null) ? causa.getMessage() : mensagem,
+             causa);
+    }
+
+    public ECommerceException(String mensagem, String motivo, Throwable causa) {
+        super(mensagem, causa);
+        this.motivo = motivo;
+    }
+
+    public String getMotivo() {
+        return motivo;
     }
 }
-
-

@@ -1,4 +1,5 @@
 package com.ecommerce_pedidos.modelo;
+import com.ecommerce_pedidos.excecao.EstoqueInsuficienteException;
 
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ public class Produto {
     private Boolean ativo;
 
     public Produto(String codigo, String nome, BigDecimal preco, Integer quantidadeEmEstoque) {
-    //  setCodigo(codigo);
+        setCodigo(codigo);
         setNome(nome);
         setPreco(preco);
         setQuantidadeEmEstoque(quantidadeEmEstoque);
@@ -22,12 +23,12 @@ public class Produto {
         return codigo;
     }
 
-   //* private void setCodigo(String codigo) {
-   //     if (codigo == null || codigo.isBlank()) {
-   //         throw new IllegalArgumentException("Código é obrigatório");
-   //    }
-   //     this.codigo = codigo.trim();
-   // }
+    private void setCodigo(String codigo) {
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("Código é obrigatório");
+       }
+       this.codigo = codigo.trim();
+    }
 
     public String getNome() {
         return nome;
@@ -89,15 +90,15 @@ public class Produto {
         return ativo && quantidadeEmEstoque >= quantidadeDesejada;
     }
 
-    public void baixarEstoque(int quantidade) {
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException("Quantidade deve ser positiva");
-        }
-        if (quantidade > this.quantidadeEmEstoque) {
-            throw new EstoqueInsuficienteException(this, quantidade);
-        }
-        this.quantidadeEmEstoque -= quantidade;
+    public void baixarEstoque(int quantidade) throws EstoqueInsuficienteException {
+    if (quantidade <= 0) {
+        throw new IllegalArgumentException("Quantidade deve ser positiva");
     }
+    if (quantidade > this.quantidadeEmEstoque) {
+        throw new EstoqueInsuficienteException(this, quantidade);
+    }
+    this.quantidadeEmEstoque -= quantidade;
+}
 
     @Override
     public String toString() {

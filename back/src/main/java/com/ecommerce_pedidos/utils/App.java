@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import com.ecommerce_pedidos.modelo.Cliente;
 import com.ecommerce_pedidos.modelo.FormaPagamento;
 import com.ecommerce_pedidos.modelo.Produto;
+import com.ecommerce_pedidos.excecao.EstoqueInsuficienteException;
 // Se Pix, CartaoCredito e Boleto estiverem em outro pacote (ex: com.ecommerce_pedidos.pagamento), importe-os aqui:
 // import com.ecommerce_pedidos.pagamento.Pix;
 // import com.ecommerce_pedidos.pagamento.CartaoCredito;
@@ -22,8 +23,14 @@ public class App {
         System.out.println(teclado.temEstoqueDisponivel(5));  // true
         System.out.println(monitor.temEstoqueDisponivel(100)); // false
 
-        teclado.baixarEstoque(3);
-        System.out.println(teclado); 
+        try {
+            teclado.baixarEstoque(3);
+            System.out.println(teclado);
+            monitor.baixarEstoque(100); // força o erro de estoque
+            System.out.println("FALHOU: aceitou baixa acima do estoque");
+        } catch (EstoqueInsuficienteException e) {
+            System.out.println("OK: recusou estoque insuficiente -> " + e.getMessage());
+        }
 
         Cliente cliente = new Cliente(
             "Ana Souza", "12345678900", "ana@exemplo.com",

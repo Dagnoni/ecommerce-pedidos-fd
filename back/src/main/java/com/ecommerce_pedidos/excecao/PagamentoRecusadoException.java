@@ -1,5 +1,5 @@
-package com.senai.ecommerce.excecao;
-import com.senai.ecommerce.modelo.Pagamento;
+package com.ecommerce_pedidos.excecao;
+
 
 public class PagamentoRecusadoException extends ECommerceException {
 private final String motivo;
@@ -8,7 +8,10 @@ public PagamentoRecusadoException(String formaPagamento, String motivo) {
 
         this.motivo = motivo;
     }
-    public String getMotivo() {
-        return motivo;
+    public PagamentoRecusadoException(String formaPagamento, String motivo, Throwable causa) {
+        super("Pagamento por " + formaPagamento + " recusado: " + motivo, causa);
+        this.motivo = motivo;
     }
+
+    public String getMotivo() { return motivo; }
 }
