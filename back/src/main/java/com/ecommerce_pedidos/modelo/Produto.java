@@ -28,7 +28,9 @@ public class Produto {
             throw new IllegalArgumentException("Código é obrigatório");
        }
        this.codigo = codigo.trim();
-    }
+        }
+        this.codigo = codigo.trim();
+  }
 
     public String getNome() {
         return nome;
@@ -105,6 +107,7 @@ public class Produto {
         return String.format("[%s] %s - R$ %s (%d em estoque)",
             this.codigo, this.nome, this.preco.toPlainString(), this.quantidadeEmEstoque);
     }
+}
 }
 
 
