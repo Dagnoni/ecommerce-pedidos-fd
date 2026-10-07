@@ -1,4 +1,5 @@
 package com.ecommerce_pedidos.modelo;
+import com.ecommerce_pedidos.excecao.EstoqueInsuficienteException;
 
 import java.math.BigDecimal;
 
@@ -25,9 +26,11 @@ public class Produto {
     private void setCodigo(String codigo) {
         if (codigo == null || codigo.isBlank()) {
             throw new IllegalArgumentException("Código é obrigatório");
+       }
+       this.codigo = codigo.trim();
         }
         this.codigo = codigo.trim();
-    }
+  }
 
     public String getNome() {
         return nome;
@@ -89,45 +92,25 @@ public class Produto {
         return ativo && quantidadeEmEstoque >= quantidadeDesejada;
     }
 
-    public void baixarEstoque(int quantidade) {
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException("Quantidade deve ser positiva");
-        }
-        if (quantidade > this.quantidadeEmEstoque) {
-            throw new EstoqueInsuficienteException(this, quantidade);
-        }
-        this.quantidadeEmEstoque -= quantidade;
+    public void baixarEstoque(int quantidade) throws EstoqueInsuficienteException {
+    if (quantidade <= 0) {
+        throw new IllegalArgumentException("Quantidade deve ser positiva");
     }
+    if (quantidade > this.quantidadeEmEstoque) {
+        throw new EstoqueInsuficienteException(this, quantidade);
+    }
+    this.quantidadeEmEstoque -= quantidade;
+}
 
     @Override
     public String toString() {
         return String.format("[%s] %s - R$ %s (%d em estoque)",
             this.codigo, this.nome, this.preco.toPlainString(), this.quantidadeEmEstoque);
     }
-<<<<<<< HEAD
 }
-=======
 }
 
-import com.senai.ecommerce.modelo.Produto;
-public class EstoqueInsuficienteException extends ECommerceException {
-    private final Produto produto;
-    private final int quantidadeSolicitada;
-    
-    public EstoqueInsuficienteException(Produto produto, int quantidade) {
-        super("Estoque insuficiente de " + produto.getNome()
-            + ": disponível " + produto.getQuantidadeEmEstoque()
-            + ", solicitado " + quantidade);
-        this.produto = produto;
-        this.quantidadeSolicitada = quantidade;
-    }
-    public Produto getProduto() {
-        return produto;
-    }
-    public int getQuantidadeSolicitada() {
-        return quantidadeSolicitada;
-    }
-}
+
+
 
 // mudar Double para BigDecimal ****
->>>>>>> 070516358b824f0c1b9f8885c70100380fe771ed
