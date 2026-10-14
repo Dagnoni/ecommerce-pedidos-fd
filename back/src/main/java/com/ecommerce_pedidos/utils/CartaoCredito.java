@@ -55,7 +55,6 @@ public class CartaoCredito extends FormaPagamento implements ProcessadorPagament
     public boolean processar(BigDecimal valor) {
         return processar();
     }
-<<<<<<< HEAD
 
     @Override
     public String getComprovante() {
@@ -68,16 +67,13 @@ public class CartaoCredito extends FormaPagamento implements ProcessadorPagament
     }
 
     @Override
+    public String getResumo() {
+        return super.getResumo() + " (cartão final " + ultimosDigitos() + ", " + parcelas + "x)";
+    }
+
+    @Override
     public boolean estornar() {
         System.out.println("Estornando compra do cartão final " + ultimosDigitos());
         return true;
     }
 }
-=======
-}
-
-
-
-
-// falta colocar bandeira
->>>>>>> 070516358b824f0c1b9f8885c70100380fe771ed

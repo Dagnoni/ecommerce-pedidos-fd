@@ -59,4 +59,9 @@ public class Boleto extends FormaPagamento implements ProcessadorPagamento {
     public String getDescricao() {
         return "Boleto " + numeroBoleto + ", vence em " + dataVencimento;
     }
+
+    @Override
+    public String getResumo() {
+        return super.getResumo() + " (boleto " + numeroBoleto + ", vence em " + dataVencimento + ")";
+    }
 }

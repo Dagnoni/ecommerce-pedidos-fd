@@ -40,12 +40,13 @@ public class Cliente extends Pessoa {
     }
 
     public void setCpf(String cpf) {
+        String anterior = getDocumento();
         setDocumento(cpf);
         if (getDocumento().length() != 11) {
+            setDocumento(anterior); // restaura o valor válido
             throw new IllegalArgumentException("Cliente deve ter CPF com 11 dígitos: " + cpf);
         }
     }
-
 
     public String getEmail() {
         return email;
@@ -53,12 +54,11 @@ public class Cliente extends Pessoa {
     private static final String REGEX_EMAIL = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
 
     public void setEmail(String email) {
-        if (email == null || email.isBlank() || !email.contains("@")) {
+        if (email == null || email.isBlank() || !email.trim().matches(REGEX_EMAIL)) {
             throw new IllegalArgumentException("E-mail inválido: " + email);
         }
         this.email = email.trim();
     }
-
 
     public String getTelefone() {
         return telefone;

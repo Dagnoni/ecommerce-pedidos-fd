@@ -2,18 +2,9 @@ package com.ecommerce_pedidos.modelo;
 
 import java.math.BigDecimal;
 
-// import java.time.LocalDateTime;
-
 public abstract class FormaPagamento {
 
-<<<<<<< HEAD
     private BigDecimal valor;
-    private LocalDateTime dataDoPagamento;
-=======
-private BigDecimal valor;
-
-// private LocalDateTime dataDoPagamento;
->>>>>>> 070516358b824f0c1b9f8885c70100380fe771ed
 
     protected FormaPagamento(BigDecimal valor) {
         setValor(valor);

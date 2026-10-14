@@ -26,11 +26,9 @@ public class Produto {
     private void setCodigo(String codigo) {
         if (codigo == null || codigo.isBlank()) {
             throw new IllegalArgumentException("Código é obrigatório");
-       }
-       this.codigo = codigo.trim();
         }
         this.codigo = codigo.trim();
-  }
+    }
 
     public String getNome() {
         return nome;
@@ -108,9 +106,3 @@ public class Produto {
             this.codigo, this.nome, this.preco.toPlainString(), this.quantidadeEmEstoque);
     }
 }
-}
-
-
-
-
-// mudar Double para BigDecimal ****

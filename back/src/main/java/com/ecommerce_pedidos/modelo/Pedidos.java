@@ -1,5 +1,6 @@
 package com.ecommerce_pedidos.modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class Pedidos {
 
 public void adicionarItem(Produto produto, int quantidade) throws PedidoInvalidoException {
     try {
-        itemPedido item = new itemPedido(produto, quantidade, produto.getPreco().doubleValue());
+        itemPedido item = new itemPedido(produto, quantidade, produto.getPreco());
         produto.baixarEstoque(quantidade);
         itens.add(item);
     } catch (EstoqueInsuficienteException | IllegalArgumentException e) {
@@ -81,17 +82,17 @@ public void adicionarItem(Produto produto, int quantidade) throws PedidoInvalido
 }
 
     //metodo de negocio: soma o subtotal de cada item do pedido
-    public double calcularValorTotal() {
-        double total = 0.0;
+    public BigDecimal calcularValorTotal() {
+        BigDecimal total = BigDecimal.ZERO;
         for (itemPedido item : itens) {
-            total = total + item.calcularSubtotal();
+            total = total.add(item.calcularSubtotal());
         }
         return total;
     }
 
     @Override
     public String toString() {
-        return String.format("Pedido %s [Cliente: %s, Data: %s, Situação: %s, Itens: %d, Total: R$ %.2f]",
-                numero, cliente.getNome(), data, situacao, itens.size(), calcularValorTotal());
+        return String.format("Pedido %s [Cliente: %s, Data: %s, Situação: %s, Itens: %d, Total: R$ %s]",
+                numero, cliente.getNome(), data, situacao, itens.size(), calcularValorTotal().toPlainString());
     }
 }
