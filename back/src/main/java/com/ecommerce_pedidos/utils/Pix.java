@@ -48,6 +48,11 @@ public class Pix extends FormaPagamento implements ProcessadorPagamento, Estorna
     }
 
     @Override
+    public String getResumo() {
+        return super.getResumo() + " (chave " + chave + ")";
+    }
+
+    @Override
     public String getResumoPagamento() {
         return getDescricao() + " (aprovação imediata)";
     }
