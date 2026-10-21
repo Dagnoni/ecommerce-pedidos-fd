@@ -104,3 +104,19 @@ _(Preencher a partir das próximas aulas, conforme o projeto evoluir.)_
 ## Licença
 
 Projeto acadêmico — Faculdade de Tecnologia SENAI "Antonio Adolpho Lobbe".
+
+## Decisões de regra de negócio
+
+| Situação | Decisão |
+|---|---|
+| Mesmo produto adicionado duas vezes ao pedido | Recusa (exceção); a quantidade se define ao adicionar. |
+| Pagar pedido já pago | Recusa (exceção), sem cobrar de novo. |
+| Quando o estoque baixa | **Quando o pagamento é aprovado** (descoberto pelo teste de integração, Aula 11). Adicionar item não reserva estoque. |
+| Estoque acaba entre adicionar e pagar | `pagar` confere antes de cobrar e recusa com exceção. |
+| `processar` devolve `false` ou lança exceção? | Situação de negócio prevista (boleto não compensado, dinheiro insuficiente) devolve `false`; erro de uso (15 parcelas, valor negativo) lança exceção. |
+
+## Testes
+
+- Convenção: sufixo `Test` = unitário, sufixo `IT` = integração (`src/test/java/.../fluxo`).
+- `mvn clean test` roda tudo e gera o relatório de cobertura em `back/target/site/jacoco/index.html`.
+- Números e análise: [`docs/relatorio-cobertura.md`](docs/relatorio-cobertura.md).
