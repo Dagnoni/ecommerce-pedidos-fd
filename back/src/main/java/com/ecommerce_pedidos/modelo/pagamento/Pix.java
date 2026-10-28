@@ -1,10 +1,8 @@
-package com.ecommerce_pedidos.utils;
+package com.ecommerce_pedidos.modelo.pagamento;
 
 import java.math.BigDecimal;
 
 import com.ecommerce_pedidos.modelo.FormaPagamento;
-import com.ecommerce_pedidos.modelo.pagamento.Estornavel;
-import com.ecommerce_pedidos.modelo.pagamento.ProcessadorPagamento;
 
 public class Pix extends FormaPagamento implements ProcessadorPagamento, Estornavel {
 

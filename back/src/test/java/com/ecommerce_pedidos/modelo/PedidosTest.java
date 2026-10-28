@@ -97,7 +97,7 @@ class PedidosTest {
     @Test
     @DisplayName("Deve somar o total quando o item é adicionado já montado")
     void deveSomarTotalQuandoItemAdicionadoMontado() {
-        pedido.adicionarItem(new itemPedido(notebook, 2, new BigDecimal("3000.00")));
+        pedido.adicionarItem(new ItemPedido(notebook, 2, new BigDecimal("3000.00")));
         assertEquals(0, new BigDecimal("6000.00").compareTo(pedido.calcularValorTotal()));
     }
 
@@ -111,7 +111,7 @@ class PedidosTest {
     @Test
     @DisplayName("Deve recusar item nulo quando adicionado ao pedido")
     void deveRecusarItemNulo() {
-        assertThrows(IllegalArgumentException.class, () -> pedido.adicionarItem((itemPedido) null));
+        assertThrows(IllegalArgumentException.class, () -> pedido.adicionarItem((ItemPedido) null));
         assertTrue(pedido.getItens().isEmpty());
     }
 

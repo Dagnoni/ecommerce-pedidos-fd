@@ -16,7 +16,7 @@ public class Pedidos {
     private Cliente cliente;
     private LocalDate data;
     private String situacao;
-    private List<itemPedido> itens;
+    private List<ItemPedido> itens;
 
     // gera numeroPedido o status do pedido e data de veci
     public Pedidos(Cliente cliente) {
@@ -57,12 +57,12 @@ public class Pedidos {
         this.situacao = situacao;
     }
 
-    public List<itemPedido> getItens() {
+    public List<ItemPedido> getItens() {
         return itens;
     }
 
     //metodo de negocio: adiciona um item na lista do pedido
-    public void adicionarItem(itemPedido item) {
+    public void adicionarItem(ItemPedido item) {
         if (item == null) {
             throw new IllegalArgumentException("Item não pode ser nulo");
         }
@@ -73,7 +73,7 @@ public class Pedidos {
 
 public void adicionarItem(Produto produto, int quantidade) throws PedidoInvalidoException {
     try {
-        itemPedido item = new itemPedido(produto, quantidade, produto.getPreco());
+        ItemPedido item = new ItemPedido(produto, quantidade, produto.getPreco());
         produto.baixarEstoque(quantidade);
         itens.add(item);
     } catch (EstoqueInsuficienteException | IllegalArgumentException e) {
@@ -84,7 +84,7 @@ public void adicionarItem(Produto produto, int quantidade) throws PedidoInvalido
     //metodo de negocio: soma o subtotal de cada item do pedido
     public BigDecimal calcularValorTotal() {
         BigDecimal total = BigDecimal.ZERO;
-        for (itemPedido item : itens) {
+        for (ItemPedido item : itens) {
             total = total.add(item.calcularSubtotal());
         }
         return total;
