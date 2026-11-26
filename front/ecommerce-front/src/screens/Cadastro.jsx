@@ -1,6 +1,3 @@
-const [form, setForm] = useState({ nome: "", sobrenome: "", cpf: "" /* ... */ });
-
-function alterarCampo(evento) {
-  setForm({ ...form, [evento.target.name]: evento.target.value });
+export default function Cadastro() {
+  return <h1>Cadastro</h1>;
 }
-// no input: <input name="nome" value={form.nome} onChange={alterarCampo} />

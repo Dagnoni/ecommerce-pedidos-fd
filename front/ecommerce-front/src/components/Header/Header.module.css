@@ -2,28 +2,28 @@
   display: flex;
   align-items: center;
   gap: 24px;
-  flex-wrap: wrap;                        /* quebra linha em tela pequena */
+  flex-wrap: wrap;
   padding: 12px 24px;
   background: var(--cor-superficie);
   border-bottom: 1px solid var(--cor-borda);
 }
 
-.header__logo {
+.logo {
   font-size: 18px;
   font-weight: 700;
   color: var(--cor-primaria);
 }
 
-.header__menu {
+.menu {
   display: flex;
   gap: 8px;
 }
 
-.header__menu--conta {
-  margin-left: auto;                      /* empurra para a direita */
+.menuConta {
+  margin-left: auto;
 }
 
-.header__link {
+.link {
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 13px;
@@ -31,12 +31,12 @@
   color: var(--cor-texto-suave);
 }
 
-.header__link:hover {
+.link:hover {
   background: var(--cor-destaque);
 }
 
-/* link da página atual (o NavLink coloca esta classe sozinho) */
-.header__link--ativo {
+/* precisa vir depois de .link para vencer a cor de fundo */
+.linkAtivo {
   background: var(--cor-primaria);
   color: #fff;
 }
