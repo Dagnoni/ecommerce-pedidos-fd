@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { ROTAS } from "../../routes/paths";
-import "./Header.css";
+import styles from "./Header.module.css";
 
 const menuPrincipal = [
   { texto: "Início", rota: ROTAS.home },
@@ -16,15 +16,15 @@ const menuConta = [
 ];
 
 function classeDoLink({ isActive }) {
-  return isActive ? "header__link header__link--ativo" : "header__link";
+  return isActive ? `${styles.link} ${styles.linkAtivo}` : styles.link;
 }
 
 export default function Header() {
   return (
-    <header className="header">
-      <NavLink to={ROTAS.home} className="header__logo">EletroShop</NavLink>
+    <header className={styles.header}>
+      <NavLink to={ROTAS.home} className={styles.logo}>EletroShop</NavLink>
 
-      <nav className="header__menu">
+      <nav className={styles.menu}>
         {menuPrincipal.map((item) => (
           <NavLink key={item.rota} to={item.rota} end className={classeDoLink}>
             {item.texto}
@@ -32,7 +32,7 @@ export default function Header() {
         ))}
       </nav>
 
-      <nav className="header__menu header__menu--conta">
+      <nav className={`${styles.menu} ${styles.menuConta}`}>
         {menuConta.map((item) => (
           <NavLink key={item.rota} to={item.rota} className={classeDoLink}>
             {item.texto}
