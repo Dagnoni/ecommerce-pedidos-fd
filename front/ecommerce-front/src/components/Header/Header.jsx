@@ -32,7 +32,7 @@ export default function Header() {
         ))}
       </nav>
 
-      <nav className="header__menu">
+      <nav className="header__menu header__menu--conta">
         {menuConta.map((item) => (
           <NavLink key={item.rota} to={item.rota} className={classeDoLink}>
             {item.texto}

@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;                        /* quebra linha em tela pequena */
+  padding: 12px 24px;
+  background: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.header__logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-primaria);
+}
+
+.header__menu {
+  display: flex;
+  gap: 8px;
+}
+
+.header__menu--conta {
+  margin-left: auto;                      /* empurra para a direita */
+}
+
+.header__link {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--cor-fundo);
+  color: var(--cor-texto-suave);
+}
+
+.header__link:hover {
+  background: var(--cor-destaque);
+}
+
+/* link da página atual (o NavLink coloca esta classe sozinho) */
+.header__link--ativo {
+  background: var(--cor-primaria);
+  color: #fff;
+}
