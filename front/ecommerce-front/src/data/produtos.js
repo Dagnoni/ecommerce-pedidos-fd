@@ -1,0 +1,36 @@
+export const produtos = [
+  {
+    id: 1,
+    nome: "iPhone 15 Pro",
+    categoria: "Celulares",
+    preco: 7499,
+    descricaoCurta: "128 GB · Preto",
+    descricao: "iPhone 15 Pro na configuração de 128 GB e acabamento preto.",
+    cores: ["Preto", "Prata"],
+    armazenamentos: ["128 GB", "256 GB"],
+    imagem: "",
+  },
+  {
+    id: 2,
+    nome: "MacBook Air M3",
+    categoria: "Notebooks",
+    preco: 14990,
+    descricaoCurta: "13 polegadas · Prata",
+    descricao: "Notebook leve com chip M3.",
+    cores: ["Prata"],
+    armazenamentos: ["256 GB", "512 GB"],
+    imagem: "",
+  },
+  {
+    id: 3,
+    nome: "AirPods Pro 2",
+    categoria: "Fones",
+    preco: 1999,
+    descricaoCurta: "Branco · Carregador USB-C",
+    descricao: "Fones com cancelamento de ruído.",
+    cores: ["Branco"],
+    armazenamentos: [],
+    imagem: "",
+  },
+  // copie o modelo acima para os outros (Apple Watch, Magic Mouse, iPad, Galaxy S24, Monitor Dell)
+];
