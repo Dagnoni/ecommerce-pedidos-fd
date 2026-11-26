@@ -1,0 +1,76 @@
+.catalogo {
+  display: grid;
+  grid-template-columns: 220px 1fr;       /* filtros | produtos */
+  gap: 24px;
+  align-items: start;
+}
+
+/* ----- filtros ----- */
+.catalogo__filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.catalogo__filtros h2 {
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.catalogo__categoria {
+  padding: 8px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.catalogo__categoria:hover {
+  background: var(--cor-fundo);
+}
+
+.catalogo__categoria--ativa {
+  background: var(--cor-destaque);
+  color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+.catalogo__preco {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+/* ----- topo e grade ----- */
+.catalogo__topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.catalogo__topo p {
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+.catalogo__topo select {
+  padding: 8px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+}
+
+/* a grade cria quantas colunas couberem: mais produtos = mais linhas, sem mexer no CSS */
+.catalogo__grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* celular: filtros em cima, produtos embaixo */
+@media (max-width: 700px) {
+  .catalogo {
+    grid-template-columns: 1fr;
+  }
+}
