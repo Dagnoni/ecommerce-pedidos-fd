@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.ecommerce_pedidos.excecao.EstoqueInsuficienteException;
+
 /** Validações de Pessoa, Cliente, Funcionario, Produto e item de pedido, uma classe por vez. */
 class RegrasDeCadastroTest {
 
@@ -102,7 +104,7 @@ class RegrasDeCadastroTest {
 
     @Test
     @DisplayName("Produto: baixar estoque recusa quantidade inválida ou maior que o disponível")
-    void produtoDeveProtegerBaixaDeEstoque() {
+    void produtoDeveProtegerBaixaDeEstoque() throws Exception {
         Produto p = new Produto("P-2", "Teclado", new BigDecimal("150.00"), 5);
         p.baixarEstoque(5);
 
@@ -110,7 +112,7 @@ class RegrasDeCadastroTest {
             () -> assertEquals(0, p.getQuantidadeEmEstoque()),
             () -> assertThrows(IllegalArgumentException.class, () -> p.baixarEstoque(0)),
             () -> assertThrows(IllegalArgumentException.class, () -> p.baixarEstoque(-2)),
-            () -> assertThrows(IllegalArgumentException.class, () -> p.baixarEstoque(1))
+            () -> assertThrows(EstoqueInsuficienteException.class, () -> p.baixarEstoque(1))
         );
     }
 

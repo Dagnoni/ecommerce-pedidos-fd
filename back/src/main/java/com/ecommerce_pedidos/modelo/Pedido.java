@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.ecommerce_pedidos.excecao.EstoqueInsuficienteException;
 import com.ecommerce_pedidos.modelo.pagamento.ProcessadorPagamento;
 
 public class Pedido {
@@ -108,7 +109,12 @@ public class Pedido {
         boolean aprovado = processador.processar(calcularValorTotal());
         if (aprovado) {
             for (ItemPedido item : itens) {
-                item.getProduto().baixarEstoque(item.getQuantidade());
+                try {
+                    item.getProduto().baixarEstoque(item.getQuantidade());
+                } catch (EstoqueInsuficienteException e) {
+                    // o estoque foi conferido antes de cobrar; se chegou aqui, o estado ficou inconsistente
+                    throw new IllegalStateException("Estoque insuficiente: " + item.getProduto().getNome(), e);
+                }
             }
             this.situacao = SituacaoDoPedido.PAGO;
             this.comprovante = processador.getComprovante();

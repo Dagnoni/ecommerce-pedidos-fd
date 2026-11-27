@@ -1,4 +1,4 @@
-package com.ecommerce_pedidos.utils;
+package com.ecommerce_pedidos.modelo.pagamento;
 
 import static org.junit.jupiter.api.Assertions.*;
 

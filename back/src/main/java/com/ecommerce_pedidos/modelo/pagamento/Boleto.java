@@ -1,10 +1,9 @@
-package com.ecommerce_pedidos.utils;
+package com.ecommerce_pedidos.modelo.pagamento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.ecommerce_pedidos.modelo.FormaPagamento;
-import com.ecommerce_pedidos.modelo.pagamento.ProcessadorPagamento;
 
 public class Boleto extends FormaPagamento implements ProcessadorPagamento {
 

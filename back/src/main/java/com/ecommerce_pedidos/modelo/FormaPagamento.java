@@ -40,8 +40,4 @@ public abstract class FormaPagamento {
     public String getResumo() {
         return String.format("%s no valor de R$ %s", getClass().getSimpleName(), valor);
     }
-
-    public String getResumoPagamento() {
-        return getResumo();
-    }
 }

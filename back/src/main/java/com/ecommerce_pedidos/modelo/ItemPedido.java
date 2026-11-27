@@ -2,14 +2,14 @@ package com.ecommerce_pedidos.modelo;
 
 import java.math.BigDecimal;
 
-public class itemPedido {
+public class ItemPedido {
     // 1. Atributos privados
     private Produto produto;
     private int quantidade;
     private BigDecimal precoPraticado;
 
     // 2. Construtor (utiliza os setters para reaproveitar as validações)
-    public itemPedido(Produto produto, int quantidade, BigDecimal precoPraticado) {
+    public ItemPedido(Produto produto, int quantidade, BigDecimal precoPraticado) {
         setProduto(produto);
         setQuantidade(quantidade);
         setPrecoPraticado(precoPraticado);
