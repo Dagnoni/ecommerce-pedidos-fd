@@ -17,11 +17,11 @@ Nossa equipe recebeu um trabalho para fazer um sistema de gestão de pedidos par
 
 ## Funcionalidades previstas
 
-- [ ] Cadastro e gerenciamento de produtos
-- [ ] Cadastro e gerenciamento de clientes
-- [ ] Criação e gerenciamento de pedidos
-- [ ] Processamento de pagamentos (cartão, boleto, Pix)
-- [ ] Testes automatizados (unitários e de integração)
+- [ x] Cadastro e gerenciamento de produtos
+- [x ] Cadastro e gerenciamento de clientes
+- [ x] Criação e gerenciamento de pedidos
+- [x ] Processamento de pagamentos (cartão, boleto, Pix)
+- [ x] Testes automatizados (unitários e de integração)
 - [ ] Pipeline de CI/CD
 - [ ] API REST para consumo por um front-end
 
