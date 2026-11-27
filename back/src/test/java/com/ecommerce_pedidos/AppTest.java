@@ -1,4 +1,4 @@
-package ecommerce-pedidos-fd.git;
+package com.ecommerce_pedidos;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 12px 24px;
+  background: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-primaria);
+}
+
+.menu {
+  display: flex;
+  gap: 8px;
+}
+
+.menuConta {
+  margin-left: auto;
+}
+
+.link {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--cor-fundo);
+  color: var(--cor-texto-suave);
+}
+
+.link:hover {
+  background: var(--cor-destaque);
+}
+
+/* precisa vir depois de .link para vencer a cor de fundo */
+.linkAtivo {
+  background: var(--cor-primaria);
+  color: #fff;
+}

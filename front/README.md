@@ -9,6 +9,7 @@
 |---|---|
 | Daniel Dagnoni | test
 | Felipe Fernandes Macari | test
+|João Guilherme Araujo Nunes |
 
 ## Descrição do desafio
 
