@@ -12,8 +12,19 @@ public class PedidosUtils {
     private static final double FRETE_MINIMO = 15.00;
     private static final double TAXA_DESCONTO = 0.10;
     private static final double DESCONTO_MAXIMO = 50.00;
-    // private static final double VALOR_FRETE_GRATIS = 300.00;
+    private static final double VALOR_FRETE_GRATIS = 300.00;
+    public static double calcularFrete(double pesoEmQuilos, double subtotal) {
 
+    if (subtotal >= VALOR_FRETE_GRATIS) {
+        return 0.0;
+    }
+
+    double quilosCobrados = Math.ceil(pesoEmQuilos);
+
+    double freteCalculado = quilosCobrados * VALOR_POR_QUILO;
+
+    return Math.max(freteCalculado, FRETE_MINIMO);
+    }
     private PedidosUtils() {
         // Classe utilitária não deve ser instanciada.
     }
@@ -41,18 +52,15 @@ public class PedidosUtils {
     public static void calcularFrete() {
 
         double pesoEmQuilos = 8.1;
+        double subtotal = 200.00;
 
-        double quilosCobrados = Math.ceil(pesoEmQuilos);
-
-        double freteCalculado = quilosCobrados * VALOR_POR_QUILO;
-
-        double freteFinal = Math.max(freteCalculado, FRETE_MINIMO);
+        double freteFinal = calcularFrete(pesoEmQuilos, subtotal);
 
         System.out.println("Peso: " + pesoEmQuilos + "kg");
 
         System.out.printf("Frete: R$ %.2f%n", freteFinal);
 
-        double descontoFinal = calcularDesconto(freteFinal);
+        double descontoFinal = calcularDesconto(subtotal);
 
         System.out.printf("Desconto Final: %.2f%n", descontoFinal);
 
@@ -85,7 +93,7 @@ public class PedidosUtils {
 
     }
 
-    private static double calcularDesconto(double valorDoPedido) {
+    public static double calcularDesconto(double valorDoPedido)  {
 
         double desconto = valorDoPedido * TAXA_DESCONTO;
 
@@ -100,6 +108,13 @@ public class PedidosUtils {
 
         return nomeDigitado.trim().toUpperCase();
     }
+    public static String formatarLinhaDoRecibo(
+        String produto, double preco, int quantidade) {
+
+        return String.format(
+            "%-20s R$ %8.2f | %3d",
+            produto, preco, quantidade);
+}
 
     private static String montarRecibo( // cria o modelo do recibo
             String[] produtos,
@@ -123,12 +138,11 @@ public class PedidosUtils {
 
         for (int i = 0; i < produtos.length; i++) {
 
-            recibo.append(String.format(
-                    "%-20s R$ %8.2f | %3d",
-                    produtos[i],
-                    precos[i],
-                    quantidades[i]))
-                  .append(System.lineSeparator());
+            recibo.append(formatarLinhaDoRecibo(
+            produtos[i],
+            precos[i],
+            quantidades[i]))
+            .append(System.lineSeparator());
         }
 
         return recibo.toString();

@@ -20,4 +20,21 @@ class PedidosUtilsTest {
     void subtotalSemLinhasEZero() {
         assertEquals(0.0, PedidosUtils.calcularSubtotal(new double[0], new int[0]), 0.0001);
     }
+    @Test
+@DisplayName("Deve respeitar o valor mínimo do frete")
+void deveRespeitarFreteMinimo() {
+    assertEquals(15.00, PedidosUtils.calcularFrete(0.4, 100.00), 0.01);
+}
+
+@Test
+@DisplayName("Deve arredondar o peso para cima")
+void deveArredondarPesoParaCima() {
+    assertEquals(22.50, PedidosUtils.calcularFrete(2.3, 150.00), 0.01);
+}
+
+@Test
+@DisplayName("Deve aplicar frete grátis")
+void deveAplicarFreteGratis() {
+    assertEquals(0.00, PedidosUtils.calcularFrete(5.0, 300.00), 0.01);
+}
 }
