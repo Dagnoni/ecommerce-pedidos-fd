@@ -3,19 +3,42 @@ package com.ecommerce_pedidos.modelo;
 import java.math.BigDecimal;
 
 public class ItemPedido {
-    // 1. Atributos privados
-    private Produto produto;
-    private int quantidade;
-    private BigDecimal precoPraticado;
 
-    // 2. Construtor (utiliza os setters para reaproveitar as validações)
+    // 1. Atributos privados e imutáveis
+
+    private final Produto produto;
+    private final int quantidade;
+    private final BigDecimal precoPraticado;
+
+    // 2. Construtor com validações
+
     public ItemPedido(Produto produto, int quantidade, BigDecimal precoPraticado) {
-        setProduto(produto);
-        setQuantidade(quantidade);
-        setPrecoPraticado(precoPraticado);
+
+        if (produto == null) {
+            throw new IllegalArgumentException(
+                "O produto não pode ser nulo."
+            );
+        }
+
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException(
+                "A quantidade deve ser maior que zero."
+            );
+        }
+
+        if (precoPraticado == null || precoPraticado.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException(
+                "O preço não pode ser nulo ou negativo."
+            );
+        }
+
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.precoPraticado = precoPraticado;
     }
 
-    // 3. Getters (Lógica de leitura)
+    // 3. Getters
+
     public Produto getProduto() {
         return this.produto;
     }
@@ -28,43 +51,24 @@ public class ItemPedido {
         return this.precoPraticado;
     }
 
-    // 4. Setters (Lógica de escrita com validações de regras de negócio)
-    public void setProduto(Produto produto) {
-        if (produto == null) {
-            throw new IllegalArgumentException("O produto não pode ser nulo.");
-        }
-        this.produto = produto;
-    }
+    // 4. Método de negócio
 
-    public void setQuantidade(int quantidade) {
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException("A quantidade deve ser maior que zero.");
-        }
-        this.quantidade = quantidade;
-    }
-
-    public void setPrecoPraticado(BigDecimal precoPraticado) {
-        if (precoPraticado == null || precoPraticado.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("O preço não pode ser negativo.");
-        }
-        this.precoPraticado = precoPraticado;
-    }
-
-    // 5. Método de negócio (pergunta que o objeto responde sobre si mesmo)
     public BigDecimal calcularSubtotal() {
-        return this.precoPraticado.multiply(BigDecimal.valueOf(this.quantidade));
+        return this.precoPraticado.multiply(
+            BigDecimal.valueOf(this.quantidade)
+        );
     }
 
-    //toString sobrescrito
+    // 5. Sobrescrita do método toString
+
     @Override
     public String toString() {
-        return String.format("ItemPedido [Produto: %s, Quantidade: %d, Preço Praticado: R$ %s, Subtotal: R$ %s]",
-                produto.getNome(), quantidade, precoPraticado.toPlainString(), calcularSubtotal().toPlainString());
+        return String.format(
+            "ItemPedido [Produto: %s, Quantidade: %d, Preço Praticado: R$ %s, Subtotal: R$ %s]",
+            produto.getNome(),
+            quantidade,
+            precoPraticado.toPlainString(),
+            calcularSubtotal().toPlainString()
+        );
     }
-
 }
-
-
-
-
-//Preciso mudar Double para BigDecimal****

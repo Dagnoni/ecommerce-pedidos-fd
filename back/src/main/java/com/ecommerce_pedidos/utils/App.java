@@ -15,120 +15,279 @@ import com.ecommerce_pedidos.modelo.pagamento.Pix;
 import com.ecommerce_pedidos.modelo.pagamento.ProcessadorPagamento;
 
 public class App {
+
     public static void main(String[] args) {
 
         // ---- Catálogo e cliente (Aulas 04 a 06) ----
-        Produto teclado = new Produto("TEC-001", "Teclado", new BigDecimal("150.00"), 8);
-        Produto monitor = new Produto("MON-001", "Monitor", new BigDecimal("899.90"), 76);
+
+        Produto teclado = new Produto(
+            "TEC-001", "Teclado", new BigDecimal("150.00"), 8
+        );
+
+        Produto monitor = new Produto(
+            "MON-001", "Monitor", new BigDecimal("899.90"), 76
+        );
+
         Cliente cliente = new Cliente(
             "Ana Souza", "12345678900", "ana@exemplo.com",
             "11999990000", "Rua das Flores", "Centro", 100,
             "São Carlos", "SP", "Brasil"
         );
+
         System.out.println(cliente.getIdentificacao());
 
-        // ---- Laço polimórfico (Passo 6 do roteiro): uma chamada, comportamentos diferentes ----
+        // ---- Laço polimórfico ----
+
+        BigDecimal valorCompra = new BigDecimal("150.00");
+
         List<ProcessadorPagamento> formas = List.of(
-            new Pix(new BigDecimal("150.00"), "ana@exemplo.com"),
-            new Boleto(new BigDecimal("300.00"), "34191-79001", LocalDate.now().plusDays(5)),
-            new CartaoCredito(new BigDecimal("899.90"), "4111111111111111", 3)
+            new Pix(valorCompra, "ana@exemplo.com"),
+
+            new Boleto(
+                valorCompra,
+                "34191-79001",
+                LocalDate.now().plusDays(5)
+            ),
+
+            new CartaoCredito(
+                valorCompra,
+                "4111111111111111",
+                3
+            )
         );
+
         System.out.println("\n--- Laço polimórfico ---");
+
         for (ProcessadorPagamento forma : formas) {
+
             System.out.println(forma.getResumoPagamento());
-            boolean ok = forma.processar(new BigDecimal("150.00"));
-            System.out.println(ok ? "Aprovado: " + forma.getComprovante() : "Aguardando");
+
+            boolean ok = forma.processar(valorCompra);
+
+            System.out.println(
+                ok ? "Aprovado: " + forma.getComprovante()
+                   : "Aguardando compensação"
+            );
         }
 
-        // ---- Passo 7: prova do princípio aberto/fechado ----
-        // Dinheiro é a quarta forma. Nenhum arquivo acima precisou mudar para ela existir.
-        ProcessadorPagamento dinheiro = new Dinheiro(new BigDecimal("200.00"));
-        System.out.println("\n--- Quarta forma (prova de extensão) ---");
-        System.out.println(dinheiro.getResumoPagamento());
-        System.out.println(dinheiro.processar(new BigDecimal("150.00")) ? "Aprovado: " + dinheiro.getComprovante() : "Recusado");
+        // ---- Princípio aberto/fechado ----
 
-        // ---- Fluxo real de um Pedido, usando o pagar() polimórfico ----
+        Dinheiro dinheiro = new Dinheiro(new BigDecimal("200.00"));
+
+        System.out.println("\n--- Quarta forma de pagamento ---");
+        System.out.println(dinheiro.getResumoPagamento());
+
+        if (dinheiro.processar(valorCompra)) {
+            System.out.println("Aprovado: " + dinheiro.getComprovante());
+            System.out.println("Troco: R$ " + dinheiro.calcularTroco(valorCompra));
+        } else {
+            System.out.println("Pagamento recusado");
+        }
+
+        // ---- Fluxo de um pedido ----
+
         System.out.println("\n--- Fluxo do Pedido ---");
-        Pedido pedido = new Pedido("PED-0001", cliente);
+
+        Pedido pedido = new Pedido(cliente);
+
         pedido.adicionarItem(teclado, 2);
-        pedido.adicionarItem(monitor); // sobrecarga: quantidade 1 por padrão
+        pedido.adicionarItem(monitor);
+
         System.out.println(pedido);
         System.out.println("Total: R$ " + pedido.calcularValorTotal());
 
-        Pix pix = new Pix(pedido.calcularValorTotal(), "ana@exemplo.com");
-        boolean pago = pedido.pagar(pix); // Pedido não cita "Pix" em lugar nenhum do seu próprio código
-        System.out.println("Pagar com Pix -> aprovado: " + pago + " | " + pedido);
+        Pix pix = new Pix(
+            pedido.calcularValorTotal(),
+            "ana@exemplo.com"
+        );
 
-        // ---- Uso opcional do contrato Estornavel (capacidade, não decisão de tipo) ----
-        ProcessadorPagamento usado = pix; // o Pedido só enxerga o contrato
-        if (usado instanceof Estornavel estornavel) {
-            estornavel.estornar();
+        boolean pago = pedido.pagar(pix);
+
+        System.out.println(
+            "Pagar com Pix -> aprovado: " + pago + " | " + pedido
+        );
+
+        // ---- Demonstração da interface Estornavel ----
+        // A demonstração é separada do pedido pago.
+
+        ProcessadorPagamento usado = new Pix(
+            valorCompra, "ana@exemplo.com"
+        );
+
+        if (usado.processar(valorCompra)) {
+            if (usado instanceof Estornavel estornavel) {
+                estornavel.estornar();
+            }
         }
 
-        // ---- Testes funcionais (Passo 5 do roteiro) ----
+        // ---- Testes funcionais ----
+
         System.out.println("\n--- Testes funcionais ---");
 
-        Pedido pedidoBoleto = new Pedido("PED-0002", cliente);
+        Pedido pedidoBoleto = new Pedido(cliente);
+
         pedidoBoleto.adicionarItem(monitor, 1);
-        boolean aprovadoBoleto = pedidoBoleto.pagar(new Boleto(monitor.getPreco(), "34191-79002", LocalDate.now().plusDays(3)));
-        System.out.println("Pagar com Boleto -> aprovado: " + aprovadoBoleto + " (esperado false) | " + pedidoBoleto.getSituacao());
+
+        boolean aprovadoBoleto = pedidoBoleto.pagar(
+            new Boleto(
+                pedidoBoleto.calcularValorTotal(),
+                "34191-79002",
+                LocalDate.now().plusDays(3)
+            )
+        );
+
+        System.out.println(
+            "Pagar com Boleto -> aprovado: " + aprovadoBoleto
+            + " (esperado false) | " + pedidoBoleto.getSituacao()
+        );
+
+        // Validação do parcelamento
 
         try {
-            new CartaoCredito(new BigDecimal("100.00"), "4111111111111111", 15);
+            new CartaoCredito(
+                new BigDecimal("100.00"),
+                "4111111111111111",
+                15
+            );
+
             System.out.println("FALHOU: aceitou 15 parcelas");
+
         } catch (IllegalArgumentException e) {
-            System.out.println("OK: recusou parcelamento inválido -> " + e.getMessage());
+            System.out.println(
+                "OK: recusou parcelamento inválido -> " + e.getMessage()
+            );
         }
 
+        // Validação de pedido vazio
+
         try {
-            Pedido pedidoVazio = new Pedido("PED-0003", cliente);
+            Pedido pedidoVazio = new Pedido(cliente);
             pedidoVazio.pagar(pix);
+
             System.out.println("FALHOU: aceitou pagamento de pedido vazio");
+
         } catch (IllegalStateException e) {
-            System.out.println("OK: recusou pagamento de pedido sem itens -> " + e.getMessage());
+            System.out.println(
+                "OK: recusou pagamento de pedido sem itens -> "
+                + e.getMessage()
+            );
         }
 
+        // Validação de processador nulo
+
         try {
-            pedido.pagar(null);
+            pedidoBoleto.pagar(null);
+
             System.out.println("FALHOU: aceitou processador null");
+
         } catch (IllegalArgumentException e) {
-            System.out.println("OK: recusou processador null -> " + e.getMessage());
+            System.out.println(
+                "OK: recusou processador null -> " + e.getMessage()
+            );
         }
+
+        // Validação de pagamento duplicado
 
         try {
-            pedido.pagar(new CartaoCredito(pedido.calcularValorTotal(), "4111111111111111", 2));
+            pedido.pagar(
+                new CartaoCredito(
+                    pedido.calcularValorTotal(),
+                    "4111111111111111",
+                    2
+                )
+            );
+
             System.out.println("FALHOU: pagou um pedido que já estava pago");
+
         } catch (IllegalStateException e) {
-            System.out.println("OK: recusou pagar pedido já pago -> " + e.getMessage());
+            System.out.println(
+                "OK: recusou pagar pedido já pago -> " + e.getMessage()
+            );
         }
 
-        // ---- Testes de integridade herdados da Aula 07 ----
+        // ---- Testes de integridade (Aula 07) ----
+
         try {
             new Pedido("PED-0004", null);
+
             System.out.println("FALHOU: aceitou pedido sem cliente");
+
         } catch (IllegalArgumentException e) {
-            System.out.println("OK: recusou pedido sem cliente -> " + e.getMessage());
+            System.out.println(
+                "OK: recusou pedido sem cliente -> " + e.getMessage()
+            );
         }
 
+        // Pedido aberto para testar as validações dos itens
+
+        Pedido pedidoTeste = new Pedido(cliente);
+
         try {
-            pedido.adicionarItem(null, 1);
+            pedidoTeste.adicionarItem(null, 1);
+
             System.out.println("FALHOU: aceitou item sem produto");
+
         } catch (IllegalArgumentException e) {
-            System.out.println("OK: recusou item sem produto -> " + e.getMessage());
+            System.out.println(
+                "OK: recusou item sem produto -> " + e.getMessage()
+            );
         }
 
+        // Validação de estoque
+
         try {
-            pedido.adicionarItem(teclado, 1000);
+            pedidoTeste.adicionarItem(teclado, 1000);
+
             System.out.println("FALHOU: aceitou quantidade maior que o estoque");
+
         } catch (IllegalStateException e) {
-            System.out.println("OK: recusou estoque insuficiente -> " + e.getMessage());
+            System.out.println(
+                "OK: recusou estoque insuficiente -> " + e.getMessage()
+            );
         }
+
+        // Proteção da lista de itens
 
         try {
             pedido.getItens().clear();
-            System.out.println("FALHOU: permitiu limpar a lista de itens por fora");
+
+            System.out.println("FALHOU: permitiu limpar a lista de itens");
+
         } catch (UnsupportedOperationException e) {
-            System.out.println("OK: lista de itens protegida contra alteração externa");
+            System.out.println(
+                "OK: lista de itens protegida contra alteração externa"
+            );
+        }
+
+        // Proteção de pedidos pagos
+
+        try {
+            pedido.adicionarItem(teclado, 1);
+
+            System.out.println("FALHOU: permitiu alterar pedido pago");
+
+        } catch (IllegalStateException e) {
+            System.out.println(
+                "OK: recusou alteração de pedido pago -> " + e.getMessage()
+            );
+        }
+
+        // Validação de valor divergente no pagamento
+
+        try {
+            Pix pixInvalido = new Pix(
+                new BigDecimal("100.00"),
+                "ana@exemplo.com"
+            );
+
+            pixInvalido.processar(valorCompra);
+
+            System.out.println("FALHOU: aceitou pagamento com valor diferente");
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(
+                "OK: recusou valor divergente -> " + e.getMessage()
+            );
         }
     }
 }

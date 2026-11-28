@@ -1,7 +1,8 @@
 package com.ecommerce_pedidos.modelo;
 
-
 public class Cliente extends Pessoa {
+
+    private static final String REGEX_EMAIL = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
 
     private String email;
     private String telefone;
@@ -12,13 +13,11 @@ public class Cliente extends Pessoa {
     private String estado;
     private String paisNacao;
 
-    public Cliente(String nome, String cpf, String email, String telefone, String rua,
-                    String bairro, Integer numeroCasa, String cidade, String estado, String paisNacao) {
-        super(nome, cpf); 
-        if (getDocumento().length() != 11) {
-        throw new IllegalArgumentException("Cliente deve ter CPF com 11 dígitos: " + cpf);
-        }
+    public Cliente(String nome, String cpf, String email, String telefone,
+                   String rua, String bairro, Integer numeroCasa,
+                   String cidade, String estado, String paisNacao) {
 
+        super(nome, cpf);
 
         setEmail(email);
         this.telefone = telefone;
@@ -28,6 +27,19 @@ public class Cliente extends Pessoa {
         this.cidade = cidade;
         this.estado = estado;
         this.paisNacao = paisNacao;
+    }
+
+    // Validação específica do CPF
+
+    @Override
+    public void setDocumento(String documento) {
+        if (documento == null || !documento.trim().matches("\\d{11}")) {
+            throw new IllegalArgumentException(
+                "Cliente deve ter CPF com 11 dígitos: " + documento
+            );
+        }
+
+        super.setDocumento(documento);
     }
 
     @Override
@@ -40,23 +52,22 @@ public class Cliente extends Pessoa {
     }
 
     public void setCpf(String cpf) {
-        String anterior = getDocumento();
         setDocumento(cpf);
-        if (getDocumento().length() != 11) {
-            setDocumento(anterior); // restaura o valor válido
-            throw new IllegalArgumentException("Cliente deve ter CPF com 11 dígitos: " + cpf);
-        }
     }
 
     public String getEmail() {
         return email;
     }
-    private static final String REGEX_EMAIL = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
 
     public void setEmail(String email) {
-        if (email == null || email.isBlank() || !email.trim().matches(REGEX_EMAIL)) {
-            throw new IllegalArgumentException("E-mail inválido: " + email);
+        if (email == null || email.isBlank()
+                || !email.trim().matches(REGEX_EMAIL)) {
+
+            throw new IllegalArgumentException(
+                "E-mail inválido: " + email
+            );
         }
+
         this.email = email.trim();
     }
 

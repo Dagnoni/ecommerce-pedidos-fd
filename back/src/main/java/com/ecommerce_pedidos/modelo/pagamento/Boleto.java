@@ -24,6 +24,7 @@ public class Boleto extends FormaPagamento implements ProcessadorPagamento {
         if (numeroBoleto == null || numeroBoleto.isBlank()) {
             throw new IllegalArgumentException("Número do boleto é obrigatório");
         }
+
         this.numeroBoleto = numeroBoleto;
     }
 
@@ -33,20 +34,30 @@ public class Boleto extends FormaPagamento implements ProcessadorPagamento {
 
     public void setDataVencimento(LocalDate dataVencimento) {
         if (dataVencimento == null || dataVencimento.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("Data de vencimento inválida: " + dataVencimento);
+            throw new IllegalArgumentException(
+                "Data de vencimento inválida: " + dataVencimento
+            );
         }
+
         this.dataVencimento = dataVencimento;
     }
 
     @Override
-    public boolean processar() {
-        System.out.println("Boleto " + numeroBoleto + " gerado, aguardando compensação (vence em " + dataVencimento + ")");
-        return false;
-    }
+    public boolean processar(BigDecimal valorCobrado) {
 
-    @Override
-    public boolean processar(BigDecimal valor) {
-        return processar();
+        validarValorCobrado(valorCobrado);
+
+        if (dataVencimento.isBefore(LocalDate.now())) {
+            throw new IllegalStateException("O boleto está vencido");
+        }
+
+        System.out.println(
+            "Boleto " + numeroBoleto
+            + " gerado, aguardando compensação (vence em "
+            + dataVencimento + ")"
+        );
+
+        return false;
     }
 
     @Override
@@ -56,11 +67,14 @@ public class Boleto extends FormaPagamento implements ProcessadorPagamento {
 
     @Override
     public String getDescricao() {
-        return "Boleto " + numeroBoleto + ", vence em " + dataVencimento;
+        return "Boleto " + numeroBoleto
+            + ", vence em " + dataVencimento;
     }
 
     @Override
     public String getResumo() {
-        return super.getResumo() + " (boleto " + numeroBoleto + ", vence em " + dataVencimento + ")";
+        return super.getResumo()
+            + " (boleto " + numeroBoleto
+            + ", vence em " + dataVencimento + ")";
     }
 }

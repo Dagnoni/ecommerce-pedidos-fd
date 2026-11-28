@@ -10,24 +10,36 @@ public class Dinheiro extends FormaPagamento implements ProcessadorPagamento {
 
     public Dinheiro(BigDecimal valorRecebido) {
         super(valorRecebido);
-        if (valorRecebido == null || valorRecebido.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Valor recebido não pode ser negativo");
-        }
         this.valorRecebido = valorRecebido;
     }
 
+    public BigDecimal getValorRecebido() {
+        return valorRecebido;
+    }
+
     public BigDecimal calcularTroco(BigDecimal valorDaCompra) {
+
+        if (!processar(valorDaCompra)) {
+            throw new IllegalArgumentException(
+                "Valor recebido é insuficiente para a compra"
+            );
+        }
+
         return valorRecebido.subtract(valorDaCompra);
     }
 
     @Override
-    public boolean processar() {
-        return valorRecebido.compareTo(getValor()) >= 0;
-    }
+    public boolean processar(BigDecimal valorCobrado) {
 
-    @Override
-    public boolean processar(BigDecimal valor) {
-        return valorRecebido.compareTo(valor) >= 0;
+        if (valorCobrado == null
+                || valorCobrado.compareTo(BigDecimal.ZERO) <= 0) {
+
+            throw new IllegalArgumentException(
+                "Valor cobrado deve ser positivo"
+            );
+        }
+
+        return valorRecebido.compareTo(valorCobrado) >= 0;
     }
 
     @Override

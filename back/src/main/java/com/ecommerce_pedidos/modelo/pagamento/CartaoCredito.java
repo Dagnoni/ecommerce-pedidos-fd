@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 import com.ecommerce_pedidos.modelo.FormaPagamento;
 
-public class CartaoCredito extends FormaPagamento implements ProcessadorPagamento, Estornavel {
+public class CartaoCredito extends FormaPagamento
+        implements ProcessadorPagamento, Estornavel {
 
     private static final int MAX_PARCELAS = 12;
 
@@ -23,8 +24,11 @@ public class CartaoCredito extends FormaPagamento implements ProcessadorPagament
 
     public void setNumeroCartao(String numeroCartao) {
         if (numeroCartao == null || numeroCartao.isBlank()) {
-            throw new IllegalArgumentException("Número do cartão é obrigatório");
+            throw new IllegalArgumentException(
+                "Número do cartão é obrigatório"
+            );
         }
+
         this.numeroCartao = numeroCartao;
     }
 
@@ -34,44 +38,58 @@ public class CartaoCredito extends FormaPagamento implements ProcessadorPagament
 
     public void setParcelas(int parcelas) {
         if (parcelas < 1 || parcelas > MAX_PARCELAS) {
-            throw new IllegalArgumentException("Parcelas deve ser entre 1 e " + MAX_PARCELAS);
+            throw new IllegalArgumentException(
+                "Parcelas deve ser entre 1 e " + MAX_PARCELAS
+            );
         }
+
         this.parcelas = parcelas;
     }
 
     private String ultimosDigitos() {
-        return numeroCartao.length() <= 4 ? numeroCartao : numeroCartao.substring(numeroCartao.length() - 4);
+        return numeroCartao.length() <= 4
+            ? numeroCartao
+            : numeroCartao.substring(numeroCartao.length() - 4);
     }
 
     @Override
-    public boolean processar() {
-        System.out.println("Autorizando cartão final " + ultimosDigitos() + " em " + parcelas + "x");
+    public boolean processar(BigDecimal valorCobrado) {
+
+        validarValorCobrado(valorCobrado);
+
+        System.out.println(
+            "Autorizando cartão final " + ultimosDigitos()
+            + " em " + parcelas + "x"
+        );
+
         return true;
     }
 
     @Override
-    public boolean processar(BigDecimal valor) {
-        return processar();
-    }
-
-    @Override
     public String getComprovante() {
-        return "CARTAO-" + ultimosDigitos() + "-" + System.currentTimeMillis();
+        return "CARTAO-" + ultimosDigitos()
+            + "-" + System.currentTimeMillis();
     }
 
     @Override
     public String getDescricao() {
-        return "Cartão final " + ultimosDigitos() + " em " + parcelas + "x";
+        return "Cartão final " + ultimosDigitos()
+            + " em " + parcelas + "x";
     }
 
     @Override
     public String getResumo() {
-        return super.getResumo() + " (cartão final " + ultimosDigitos() + ", " + parcelas + "x)";
+        return super.getResumo()
+            + " (cartão final " + ultimosDigitos()
+            + ", " + parcelas + "x)";
     }
 
     @Override
     public boolean estornar() {
-        System.out.println("Estornando compra do cartão final " + ultimosDigitos());
+        System.out.println(
+            "Estornando compra do cartão final " + ultimosDigitos()
+        );
+
         return true;
     }
 }
